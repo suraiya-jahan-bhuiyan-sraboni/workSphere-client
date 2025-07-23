@@ -6,9 +6,11 @@ import Footer from './root components/Footer'
 
 const Root = () => {
     return (
-        <div>
-            <Nav />
-            <Outlet />
+        <div className='overflow-hidden'> {/**/}
+            <Nav/>
+            <div className='min-h-screen w-11/12 mx-auto sm:p-4 '>
+                <Outlet />
+            </div>
             <Footer />
         </div>
     )
