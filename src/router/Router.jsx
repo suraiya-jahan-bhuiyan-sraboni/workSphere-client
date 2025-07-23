@@ -6,11 +6,19 @@ import {
 import Home from "../pages/Home";
 import Root from "../root/Root";
 import Login from "../pages/Login";
+import Register from "../pages/Register";
+import ContactUs from "../pages/ContactUs";
 
 const router = createBrowserRouter([
     {
         path: "/",
         Component: Root,
+        hydrateFallbackElement: (
+            <div className="min-h-screen flex justify-center items-center flex-col">
+                Wait...
+                <progress className="progress w-56"></progress>
+            </div>
+        ),
         children: [
             {
                 index:true,
@@ -19,7 +27,15 @@ const router = createBrowserRouter([
             }, {
                 path: "/login",
                 Component:Login
-            }
+            },
+            {
+                path: "/register",
+                element: <Register />,
+            },
+            {
+                path: "/contact",
+                element: <ContactUs />,
+            },
         ]
     },
 ]);
