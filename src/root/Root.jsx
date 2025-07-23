@@ -1,7 +1,8 @@
 import React from 'react'
 import { Outlet } from 'react-router'
-import Nav from '../components/root components/Nav'
-import Footer from '../components/root components/Footer'
+import Nav from './root components/Nav'
+import Footer from './root components/Footer'
+
 
 const Root = () => {
     return (

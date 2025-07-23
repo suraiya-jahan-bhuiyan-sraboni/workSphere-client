@@ -110,11 +110,47 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+div a.active,
+li a.active {
+  text-align: center;
+  padding: 4px 16px;
+  border: 1px solid var(--primary);
+}
+
+@media (max-width: 375px) {
+  .custom-auth-btn {
+    display: none !important;
+  }
+}
+
+.custom-btn {
+  display: none !important;
+}
+
+@media (max-width: 375px) {
+  .custom-btn {
+    display: inline-block !important;
   }
 }

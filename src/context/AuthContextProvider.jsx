@@ -1,11 +1,12 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { auth } from '../firebase/firebase.config'
+
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth'
 import { GoogleAuthProvider } from "firebase/auth";
 import { AuthContext } from './AuthContext';
 import {
     useQuery
 } from '@tanstack/react-query'
+import { auth } from '../firebase/firebase.config';
 
 
 const AuthContextProvider = ({ children }) => {
@@ -45,7 +46,7 @@ const AuthContextProvider = ({ children }) => {
     }, [])
     const { data: roleData, isPending: roleLoading } = useQuery({
         queryKey: ['role', user?.email],
-        enabled: !!user?.email, // only fetch when email is available
+        enabled: !!user?.email, 
         queryFn: async () => {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/user-role?email=${user.email}`)
            // console.log("Role data fetched:", res);
