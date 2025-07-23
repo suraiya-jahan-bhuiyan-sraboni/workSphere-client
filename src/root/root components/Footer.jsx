@@ -6,11 +6,11 @@ const Footer = () => {
       <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
         {/* Company Info */}
         <div className="mb-4 md:mb-0">
-          <h3 className="text-xl font-bold">Workey</h3>
+          <h3 className="text-xl font-bold">WorkSphere</h3>
 
         </div>
         <p className="text-xs mb-3 md:mb-0">
-          &copy; {new Date().getFullYear()} Workey. All rights reserved.
+          &copy; {new Date().getFullYear()} WorkSphere. All rights reserved.
         </p>
         {/* Navigation Links */}
         <ul className="flex space-x-4 ">
