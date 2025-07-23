@@ -8,6 +8,7 @@ import Root from "../root/Root";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ContactUs from "../pages/ContactUs";
+import Error404 from "../pages/Error404";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
                 element: <ContactUs />,
             },
         ]
+    },
+    {
+        path: "/*",
+        Component: Error404,
     },
 ]);
 
