@@ -59,10 +59,14 @@ const WorkSheet = () => {
         console.log("Submitted Work Entry:", res.data);
     };
 
-    const deleteEntry = (index) => {
-        const updated = [...entries];
-        updated.splice(index, 1);
-        setEntries(updated);
+    const deleteEntry = async (id) => {
+        const confirmDelete = confirm("Are you sure you want to delete this entry?");
+        if (!confirmDelete) return;
+        const res = await axios.delete(`${import.meta.env.VITE_API_URL}/works/${id}`);
+        if (res.status === 200) {
+            console.log("Entry deleted:", res.data);
+            refetch()
+        }
     };
     const fetchWorkEntries = async (email) => {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/works?email=${email}`);
@@ -201,8 +205,8 @@ const WorkSheet = () => {
                                     </tr>
                                 )}
 
-                                {paginatedEntries.map((entry, idx) => (
-                                    <tr key={idx} className="border-b">
+                                {paginatedEntries.map((entry) => (
+                                    <tr key={entry._id} className="border-b">
                                         <td className="py-2">{entry.task}</td>
                                         <td className="py-2">{entry.hours} hrs</td>
                                         <td className="py-2">{entry.date}</td>
@@ -213,7 +217,7 @@ const WorkSheet = () => {
                                             <Button
                                                 variant="ghost"
                                                 size="icon"
-                                                onClick={() => deleteEntry(idx)}
+                                                onClick={() => deleteEntry(entry._id)}
                                             >
                                                 <X className="w-4 h-4 text-red-500" />
                                             </Button>
