@@ -12,7 +12,9 @@ const Dashboard = () => {
             <Nav />
             <div className='min-h-screen flex'>
                 <aside className="hidden sm:flex sm:flex-col w-50 bg-secondary border-r min-h-screen">
+                    <div className="p-6 font-bold text-lg border-b">Dashboard</div>
                     <nav className="p-4 space-y-2">
+                        {/* Admin routes */}
                         {role === 'admin' && (
                             <>
                                 <NavLink to="/dashboard/employees" className="flex items-center gap-2 p-2 rounded hover:bg-secondary/80">All Employee List</NavLink>
