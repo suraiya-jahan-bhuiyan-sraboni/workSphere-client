@@ -3,6 +3,7 @@ import { Outlet } from 'react-router'
 import Nav from './root components/Nav'
 import Footer from './root components/Footer'
 import { AuthContext } from '../context/AuthContext'
+import { Toaster } from "@/components/ui/sonner"
 
 
 const Root = () => {
@@ -21,6 +22,7 @@ const Root = () => {
             <div className='min-h-screen w-11/12 mx-auto sm:p-4 '>
                 <Outlet />
             </div>
+            <Toaster />
             <Footer />
         </div>
     )

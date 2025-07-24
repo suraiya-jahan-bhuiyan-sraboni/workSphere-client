@@ -15,6 +15,14 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useQuery } from '@tanstack/react-query'
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 
 
 const tasks = [
@@ -29,19 +37,26 @@ const tasks = [
     "Client Call",
     "Bug Fixing",
 ];
-const PAGE_SIZE = 5;
+
 const WorkSheet = () => {
     const { user } = useContext(AuthContext)
+    const [isEditOpen, setIsEditOpen] = useState(false);
     const [page, setPage] = useState(1);
-    const [taskAdded, setTaskAdded] = useState(false);
-    const [taskDeleted, setTaskDeleted] = useState(false);
-
+    const [selectedEntry, setSelectedEntry] = useState({});
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors },
         setValue,
+    } = useForm();
+
+    const {
+        register: editRegister,
+        handleSubmit: handleEditSubmit,
+        reset: resetEdit,
+        setValue: setEditValue,
+        formState: { errors: editErrors },
     } = useForm();
 
     const onSubmit = async (data) => {
@@ -52,12 +67,28 @@ const WorkSheet = () => {
         const res = await axios.post(`${import.meta.env.VITE_API_URL}/works`, data);
         if (res.data.acknowledged) {
             console.log("Work entry added successfully");
-            setTaskAdded(true);
             refetch();
         }
         reset();
         console.log("Submitted Work Entry:", res.data);
     };
+    const onEditSubmit = async (data) => {
+        data.email = user.email;
+        const formattedDate = format(new Date(data.date), "MMM dd, yyyy");
+        data.date = formattedDate;
+        try {
+            const res = await axios.put(`${import.meta.env.VITE_API_URL}/works/${selectedEntry._id}`, data);
+            if (res.status === 200) {
+                console.log("Entry updated:", res.data);
+                resetEdit();
+                setIsEditOpen(false);
+                refetch();
+            }
+        } catch (error) {
+            console.error("Error updating entry:", error);
+        }
+    };
+
 
     const deleteEntry = async (id) => {
         const confirmDelete = confirm("Are you sure you want to delete this entry?");
@@ -80,7 +111,7 @@ const WorkSheet = () => {
         isError,
         refetch
     } = useQuery({
-        queryKey: ['work-entries', user?.email, taskAdded],
+        queryKey: ['work-entries', user?.email],
         queryFn: () => fetchWorkEntries(user.email),
         enabled: !!user?.email,
     });
@@ -91,11 +122,17 @@ const WorkSheet = () => {
     //         .catch(err => console.error("Error fetching work entries:", err));
     // }, [taskAdded])
 
-    console.log("Entries:", workEntries);
+    //console.log("Entries:", workEntries);
+    const PAGE_SIZE = 5;
 
     const totalPages = Math.ceil(workEntries.length / PAGE_SIZE);
     const paginatedEntries = workEntries.slice(0, page * PAGE_SIZE);
-
+    function toInputDate(dateStr) {
+        // Try to parse known formats, fallback to today
+        const d = new Date(dateStr);
+        if (isNaN(d)) return "";
+        return d.toISOString().slice(0, 10);
+    }
     const loadMore = () => {
         if (page < totalPages) {
             setPage(page + 1);
@@ -211,9 +248,62 @@ const WorkSheet = () => {
                                         <td className="py-2">{entry.hours} hrs</td>
                                         <td className="py-2">{entry.date}</td>
                                         <td className="py-2 space-x-2">
-                                            <Button variant="ghost" size="icon">
-                                                <Pencil className="w-4 h-4" />
-                                            </Button>
+                                            <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+                                                <DialogTrigger asChild>
+                                                    <Button variant="ghost" size="icon"
+                                                        onClick={() => { setSelectedEntry(entry); setIsEditOpen(true); }}
+                                                    >
+                                                        <Pencil className="w-4 h-4" />
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <DialogContent>
+                                                    <DialogHeader>
+                                                        <DialogTitle>Edit Work Entry</DialogTitle>
+                                                        <DialogDescription>
+                                                            Update the details for this work entry and click "Update" to save changes.
+                                                        </DialogDescription>
+                                                    </DialogHeader>
+                                                    {selectedEntry && (
+                                                        <form onSubmit={handleEditSubmit(onEditSubmit)} className="space-y-4">
+                                                            <Select
+                                                                onValueChange={(val) => setEditValue("task", val)}
+                                                                defaultValue={selectedEntry.task}
+                                                            >
+                                                                <SelectTrigger>
+                                                                    <SelectValue placeholder="Select Task" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    {tasks.map((t) => (
+                                                                        <SelectItem key={t} value={t}>{t}</SelectItem>
+                                                                    ))}
+                                                                </SelectContent>
+                                                                
+                                                            </Select>
+                                                            <input
+                                                                type="hidden"
+                                                                {...editRegister("task", { required: "Task is required" })}
+                                                                defaultValue={selectedEntry.task}
+                                                            />
+                                                            <Input
+                                                                type="number"
+                                                                placeholder="Enter hours"
+                                                                {...editRegister("hours")}
+                                                                defaultValue={selectedEntry.hours}
+                                                            />
+                                                            <Input
+                                                                type="date"
+                                                                {...editRegister("date")}
+                                                                defaultValue={toInputDate(selectedEntry.date)}
+                                                            />
+                                                            <div className="flex justify-end gap-2">
+                                                                <Button type="button" variant="ghost" onClick={() => { resetEdit(); setIsEditOpen(false); }}>Cancel</Button>
+                                                                <Button type="submit">Update</Button>
+                                                            </div>
+                                                        </form>
+                                                    )}
+                                                </DialogContent>
+                                            </Dialog>
+
                                             <Button
                                                 variant="ghost"
                                                 size="icon"
