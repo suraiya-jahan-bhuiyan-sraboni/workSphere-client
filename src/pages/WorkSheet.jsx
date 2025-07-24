@@ -23,6 +23,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import { toast } from "sonner";
 
 
 const tasks = [
@@ -67,6 +68,7 @@ const WorkSheet = () => {
         const res = await axios.post(`${import.meta.env.VITE_API_URL}/works`, data);
         if (res.data.acknowledged) {
             console.log("Work entry added successfully");
+            toast.success("Work entry added successfully");
             refetch();
         }
         reset();
@@ -91,13 +93,21 @@ const WorkSheet = () => {
 
 
     const deleteEntry = async (id) => {
-        const confirmDelete = confirm("Are you sure you want to delete this entry?");
-        if (!confirmDelete) return;
-        const res = await axios.delete(`${import.meta.env.VITE_API_URL}/works/${id}`);
-        if (res.status === 200) {
-            console.log("Entry deleted:", res.data);
-            refetch()
-        }
+        toast("Are you sure you want to delete this task?", {
+            action: {
+                label: "confirm",
+                onClick: async () => {
+                    const res = await axios.delete(`${import.meta.env.VITE_API_URL}/works/${id}`);
+                    if (res.status === 200) {
+                        console.log("Entry deleted:", res.data);
+                        toast.error("Entry deleted successfully");
+                        refetch()
+                    }
+
+                },
+            },
+        })
+
     };
     const fetchWorkEntries = async (email) => {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/works?email=${email}`);
@@ -277,7 +287,7 @@ const WorkSheet = () => {
                                                                         <SelectItem key={t} value={t}>{t}</SelectItem>
                                                                     ))}
                                                                 </SelectContent>
-                                                                
+
                                                             </Select>
                                                             <input
                                                                 type="hidden"
