@@ -11,6 +11,7 @@ import ContactUs from "../pages/ContactUs";
 import Error404 from "../pages/Error404";
 import DashBoard from "../pages/DashBoard";
 import DashboardHome from "../pages/DashboardHome";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -44,9 +45,9 @@ const router = createBrowserRouter([
     {
         path: "/dashboard",
         element: (
-
+            <PrivateRoute>
                 <DashBoard />
-
+            </PrivateRoute>
         ),
         children: [
             {
