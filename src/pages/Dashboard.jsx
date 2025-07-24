@@ -11,7 +11,7 @@ const Dashboard = () => {
     return (
         <div>
             <Nav />
-            <Toaster />
+            <Toaster position='top-center'/>
             <div className='min-h-screen flex'>
                 <aside className="hidden sm:flex sm:flex-col w-50 bg-secondary border-r min-h-screen">
                     <div className="p-6 font-bold text-lg border-b">Dashboard</div>
