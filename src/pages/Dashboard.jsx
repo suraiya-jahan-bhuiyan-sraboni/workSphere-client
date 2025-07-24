@@ -3,6 +3,7 @@ import { NavLink, Outlet } from 'react-router'
 import Footer from '../root/root components/Footer'
 import Nav from '../root/root components/Nav'
 import { AuthContext } from '../context/AuthContext'
+import { Toaster } from 'sonner'
 
 
 const Dashboard = () => {
@@ -10,6 +11,7 @@ const Dashboard = () => {
     return (
         <div>
             <Nav />
+            <Toaster />
             <div className='min-h-screen flex'>
                 <aside className="hidden sm:flex sm:flex-col w-50 bg-secondary border-r min-h-screen">
                     <div className="p-6 font-bold text-lg border-b">Dashboard</div>

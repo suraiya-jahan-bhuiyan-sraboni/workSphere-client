@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { use, useContext, useState } from 'react'
 
 import {
     Table,
@@ -14,6 +14,9 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from '@tanstack/react-query';
 import { AvatarImage } from '@radix-ui/react-avatar';
+import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
+import { toast } from 'sonner';
 
 // const employees = [
 //     {
@@ -60,17 +63,27 @@ import { AvatarImage } from '@radix-ui/react-avatar';
 
 
 const AllEmployee = () => {
-
+    const {user}=useContext(AuthContext);
     const fetchEmployees = async () => {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/employees`);
         if (!res.ok) throw new Error("Failed to fetch employees");
         return res.json();
     };
-    const { data: employees = [], isLoading, isError } = useQuery({
-        queryKey: ['employees'],
-        queryFn: fetchEmployees
+    const { data: employees = [], isLoading, isError, refetch } = useQuery({
+        queryKey: ['employees', user?.email],
+        queryFn: fetchEmployees,
+        enabled: !!user?.email,
     });
     console.log("Employees:", employees);
+
+    const makeHR = async (id) => { 
+        const res = await axios.patch(`${import.meta.env.VITE_API_URL}/make-hr/${id}`);
+        res.data.success && toast(res.data.message);
+        refetch();
+    }
+
+
+
     if (isLoading) return <p className="p-4">Loading...</p>;
     if (isError) return <p className="p-4 text-red-500">Error loading data</p>;
 
@@ -113,7 +126,7 @@ const AllEmployee = () => {
                                             <div className="flex items-center gap-4">
                                                 
                                                 <Avatar>
-                                                    <AvatarImage src={emp.profilePhoto} />
+                                                    <AvatarImage src={emp.profilePhoto} className='w-full h-full object-cover'/>
                                                     <AvatarFallback>{initials}</AvatarFallback>
                                                 </Avatar>
                                                 <div>
@@ -129,10 +142,10 @@ const AllEmployee = () => {
                                                 <Badge variant="destructive">fired</Badge>
                                             ) : (<>
                                                 {
-                                                    emp.isHR ? (
+                                                    emp.role=='hr' ? (
                                                         <Badge variant="outline">HR</Badge>
                                                     ) : (
-                                                        <Button size="sm">Make HR</Button>
+                                                        <Button size="sm" onClick={() => makeHR(emp._id)}>Make HR</Button>
                                                     )
                                                 }
                                             </>
