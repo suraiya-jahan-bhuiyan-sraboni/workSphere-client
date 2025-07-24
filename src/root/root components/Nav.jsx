@@ -24,7 +24,8 @@ import {
 import { MenuIcon } from 'lucide-react';
 import { DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, } from '../../components/ui/dropdown-menu';
 import { ModeToggle } from '../../components/mode-toggle';
-//import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
+
 
 
 
@@ -34,7 +35,8 @@ import { ModeToggle } from '../../components/mode-toggle';
 const Nav = () => {
   //const { user, logout, loading, role } = useContext(AuthContext)
   const location = useLocation()
-  const user=true
+  const user = true
+  const role = 'admin' 
 
   const handleLogout = function () {
     logout().then(() => {

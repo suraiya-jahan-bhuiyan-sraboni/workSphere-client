@@ -9,6 +9,8 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ContactUs from "../pages/ContactUs";
 import Error404 from "../pages/Error404";
+import DashBoard from "../pages/DashBoard";
+import DashboardHome from "../pages/DashboardHome";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +40,22 @@ const router = createBrowserRouter([
                 element: <ContactUs />,
             },
         ]
+    },
+    {
+        path: "/dashboard",
+        element: (
+
+                <DashBoard />
+
+        ),
+        children: [
+            {
+                index: true,
+                path: "/dashboard",
+                element: <DashboardHome />,
+            },
+            
+        ],
     },
     {
         path: "/*",
