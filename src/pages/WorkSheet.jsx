@@ -14,13 +14,24 @@ import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import { useQuery } from '@tanstack/react-query'
 
 
-const tasks = ["Sales", "Support", "Content"];
+const tasks = [
+    "Sales",
+    "Support",
+    "Content Writing",
+    "Design Review",
+    "Team Meeting",
+    "Code Review",
+    "Development",
+    "Testing",
+    "Client Call",
+    "Bug Fixing",
+];
 const PAGE_SIZE = 5;
 const WorkSheet = () => {
     const { user } = useContext(AuthContext)
-    const [entries, setEntries] = useState([]);
     const [page, setPage] = useState(1);
     const [taskAdded, setTaskAdded] = useState(false);
     const [taskDeleted, setTaskDeleted] = useState(false);
@@ -42,6 +53,7 @@ const WorkSheet = () => {
         if (res.data.acknowledged) {
             console.log("Work entry added successfully");
             setTaskAdded(true);
+            refetch();
         }
         reset();
         console.log("Submitted Work Entry:", res.data);
@@ -52,17 +64,33 @@ const WorkSheet = () => {
         updated.splice(index, 1);
         setEntries(updated);
     };
+    const fetchWorkEntries = async (email) => {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/works?email=${email}`);
+        console.log("Fetched Work Entries:", res.data);
+        return res.data;
+    };
+    const {
+        data: workEntries = [],
+        isPending,
+        isLoading,
+        isError,
+        refetch
+    } = useQuery({
+        queryKey: ['work-entries', user?.email, taskAdded],
+        queryFn: () => fetchWorkEntries(user.email),
+        enabled: !!user?.email,
+    });
 
-    useEffect(() => {
-        axios.get(`${import.meta.env.VITE_API_URL}/works?email=${user.email}`)
-            .then(res => setEntries(res.data))
-            .catch(err => console.error("Error fetching work entries:", err));
-    }, [taskAdded])
+    // useEffect(() => {
+    //     axios.get(`${import.meta.env.VITE_API_URL}/works?email=${user.email}`)
+    //         .then(res => setEntries(res.data))
+    //         .catch(err => console.error("Error fetching work entries:", err));
+    // }, [taskAdded])
 
-    console.log("Entries:", entries);
+    console.log("Entries:", workEntries);
 
-    const totalPages = Math.ceil(entries.length / PAGE_SIZE);
-    const paginatedEntries = entries.slice(0, page * PAGE_SIZE);
+    const totalPages = Math.ceil(workEntries.length / PAGE_SIZE);
+    const paginatedEntries = workEntries.slice(0, page * PAGE_SIZE);
 
     const loadMore = () => {
         if (page < totalPages) {
@@ -150,7 +178,29 @@ const WorkSheet = () => {
                                     <th className="py-2">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="col-span-4 ">
+                                {isLoading && (
+                                    <tr>
+                                        <td colSpan={4} className="text-center py-4">
+                                            Loading work entries...
+                                        </td>
+                                    </tr>
+                                )}
+                                {isError && (
+                                    <tr>
+                                        <td colSpan={4} className="text-center py-4 text-red-500">
+                                            Failed to load work entries.
+                                        </td>
+                                    </tr>
+                                )}
+                                {!isLoading && !isError && paginatedEntries.length === 0 && (
+                                    <tr>
+                                        <td colSpan={4} className="text-center py-4">
+                                            No work entries found.
+                                        </td>
+                                    </tr>
+                                )}
+
                                 {paginatedEntries.map((entry, idx) => (
                                     <tr key={idx} className="border-b">
                                         <td className="py-2">{entry.task}</td>
@@ -178,7 +228,7 @@ const WorkSheet = () => {
                             </div>
                         )}
                     </div>
-                    <div className="absolute bottom-0 right-2 text-sm text-gray-500">
+                    <div className="absolute p-2 right-2 text-sm text-gray-500">
                         Page {page} of {totalPages}
                     </div>
                 </CardContent>
