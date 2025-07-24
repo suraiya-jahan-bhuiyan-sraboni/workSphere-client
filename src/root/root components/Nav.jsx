@@ -33,10 +33,8 @@ import { AuthContext } from '../../context/AuthContext';
 
 
 const Nav = () => {
-  //const { user, logout, loading, role } = useContext(AuthContext)
+  const { user, logout, loading, role } = useContext(AuthContext)
   const location = useLocation()
-  const user = true
-  const role = 'admin' 
 
   const handleLogout = function () {
     logout().then(() => {

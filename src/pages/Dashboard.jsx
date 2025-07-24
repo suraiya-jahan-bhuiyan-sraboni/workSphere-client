@@ -1,17 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink, Outlet } from 'react-router'
 import Footer from '../root/root components/Footer'
 import Nav from '../root/root components/Nav'
+import { AuthContext } from '../context/AuthContext'
 
 
 const Dashboard = () => {
-    const role = 'admin';
+    const { role } = useContext(AuthContext)
     return (
         <div>
             <Nav />
             <div className='min-h-screen flex'>
-                <aside className="hidden sm:flex sm:flex-col w-45 bg-secondary border-r min-h-screen">
-                    <div className="p-6 font-bold text-lg border-b">Dashboard</div>
+                <aside className="hidden sm:flex sm:flex-col w-50 bg-secondary border-r min-h-screen">
                     <nav className="p-4 space-y-2">
                         {role === 'admin' && (
                             <>
@@ -35,11 +35,10 @@ const Dashboard = () => {
                         )}
                     </nav>
                 </aside>
-                <main className="flex-1">
+                <main className="flex-1 overflow-x-auto">
                     <Outlet />
                 </main>
             </div>
-
             <Footer />
         </div>
     )
