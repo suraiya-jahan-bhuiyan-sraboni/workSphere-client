@@ -29,7 +29,7 @@ const faqs = [
 ];
 const ContactUs = () => {
     return (
-        <div>
+        <div className='min-h-screen w-11/12 mx-auto'>
             <section className="py-16">
                 {/* Section Heading */}
                 <div className="text-center mb-12">
