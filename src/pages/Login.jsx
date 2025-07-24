@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { set, z } from "zod"
@@ -49,7 +49,7 @@ const Login = () => {
     const isUserExists = await axios.get(`${import.meta.env.VITE_API_URL}/users?email=${data.email}`);
     if (isUserExists.data.isFired) {
       console.error("User is fired, cannot login.");
-      toast("You are fired, cannot login.");
+      toast.error("You are fired, cannot login")
     }else{
     loginUser(data.email, data.password)
       .then((result) => {
@@ -87,10 +87,11 @@ const Login = () => {
         console.log("User already exists:", isUserExists.data);
 
         if (isUserExists.data.isFired) {
-          console.error("User is fired, cannot login.");
-          logout().then(() => {
-            toast("You are fired, cannot login.");
-          });
+          console.log("User is fired, cannot login.");
+          logout();
+          toast("You are fired, cannot login");
+          setLoading(false);
+          return;
         } else {
 
           if (isUserExists.data.user === false) {
