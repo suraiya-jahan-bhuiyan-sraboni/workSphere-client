@@ -15,6 +15,7 @@ import axios from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
+
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
   password: z.string().min(6, "Password must be at least 6 characters"),
@@ -57,9 +58,12 @@ const Login = () => {
         console.log("firebase User logged in successfully:", userr);
         setUser(userr);
         navigate(from);
+        toast.success("Logged in successfully!");
+        navigate(from);
       })
       .catch((error) => {
         console.error("Error logging in:", error);
+        toast.error("Error logging in");
       });
     }
   };
@@ -78,8 +82,9 @@ const Login = () => {
           role: "employee",
           bankAccountNumber: "",
           monthlySalary: "",
-          designation: "",
+          designation: "worker",
           profilePhoto: "",
+          isFired: false,
           created_at: new Date().toISOString()
         };
 
@@ -89,7 +94,7 @@ const Login = () => {
         if (isUserExists.data.isFired) {
           console.log("User is fired, cannot login.");
           logout();
-          toast("You are fired, cannot login");
+          toast.error("You are fired, cannot login");
           setLoading(false);
           return;
         } else {
@@ -99,11 +104,11 @@ const Login = () => {
             console.log("Google User logged in with first time registration successfully:", registeredUser.data);
             await queryClient.refetchQueries({ queryKey: ['role', userr.email] });
             setLoading(false);
-
+            toast.success("Registered successfully!");
           } else {
             console.log("Google User logged in successfully:", userr);
             setLoading(false);
-
+            toast.success("Logged in successfully!");
           }
         }
 

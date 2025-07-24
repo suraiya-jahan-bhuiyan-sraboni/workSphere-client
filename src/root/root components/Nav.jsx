@@ -25,12 +25,7 @@ import { MenuIcon } from 'lucide-react';
 import { DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, } from '../../components/ui/dropdown-menu';
 import { ModeToggle } from '../../components/mode-toggle';
 import { AuthContext } from '../../context/AuthContext';
-
-
-
-
-
-
+import { toast } from 'sonner';
 
 const Nav = () => {
   const { user, logout, loading, role } = useContext(AuthContext)
@@ -40,13 +35,13 @@ const Nav = () => {
     logout().then(() => {
       // Sign-out successful.
       // console.log("logged out")
-      // toast.success("Logged Out Sucessful");
+      toast.success("Logged Out Sucessful");
 
 
     }).catch((error) => {
       //
       // console.log("An error happened.", error)
-      //toast.error(error);
+      toast.error(error);
 
     });
 

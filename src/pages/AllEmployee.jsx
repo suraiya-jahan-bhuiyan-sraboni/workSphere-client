@@ -78,7 +78,7 @@ const AllEmployee = () => {
 
     const makeHR = async (id) => {
         const res = await axios.patch(`${import.meta.env.VITE_API_URL}/make-hr/${id}`);
-        res.data.success && toast(res.data.message);
+        res.data.success && toast.success(res.data.message);
         refetch();
     }
     const fireEmployee = (id) => {
@@ -90,7 +90,7 @@ const AllEmployee = () => {
                     try {
                         const res = await axios.patch(`${import.meta.env.VITE_API_URL}/user-fire/${id}`);
                         //console.log(res.data);
-                        res.data.success && toast(res.data.message);
+                        res.data.success && toast.warning(res.data.message);
                         refetch();
                     } catch (err) {
                         console.error("Error firing employee", err);

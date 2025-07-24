@@ -9,7 +9,6 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ContactUs from "../pages/ContactUs";
 import Error404 from "../pages/Error404";
-import DashBoard from "../pages/DashBoard";
 import DashboardHome from "../pages/DashboardHome";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
@@ -22,6 +21,7 @@ import EmployeeDetails from "../pages/EmployeeDetails";
 import WorkProgress from "../pages/WorkProgress";
 import WorkSheet from "../pages/WorkSheet";
 import PaymentHistory from "../pages/PaymentHistory";
+import Dashboard from "../pages/Dashboard";
 
 const router = createBrowserRouter([
     {
@@ -35,12 +35,12 @@ const router = createBrowserRouter([
         ),
         children: [
             {
-                index:true,
+                index: true,
                 path: "/",
-                Component:Home
+                Component: Home
             }, {
                 path: "/login",
-                Component:Login
+                Component: Login
             },
             {
                 path: "/register",
@@ -50,79 +50,79 @@ const router = createBrowserRouter([
                 path: "/contact",
                 element: <ContactUs />,
             },
-        ]
-    },
-    {
-        path: "/dashboard",
-        element: (
-            <PrivateRoute>
-                <DashBoard />
-            </PrivateRoute>
-        ),
-        children: [
             {
-                index: true,
                 path: "/dashboard",
-                element: <DashboardHome />,
-            },
-            {
-                path: "/dashboard/employees",
                 element: (
-                    <AdminRoute>
-                        <AllEmployee />
-                    </AdminRoute>
+                    <PrivateRoute>
+                        <Dashboard />
+                    </PrivateRoute>
                 ),
-            },
-            {
-                path: "/dashboard/payroll",
-                element: (
-                    <AdminRoute>
-                        <Payroll />
-                    </AdminRoute>
-                ),
-            },
-            {
-                path: "/dashboard/employee-list",
-                element: (
-                    <HrRoute>
-                        <EmployeeList />
-                    </HrRoute>
-                ),
-            },
-            {
-                path: "/dashboard/employee-list/empolyeedetails/:id",
-                element: (
-                    <HrRoute>
-                        <EmployeeDetails />
-                    </HrRoute>
-                ),
-            },
-            {
-                path: "/dashboard/work-progress",
-                element: (
-                    <HrRoute>
-                        <WorkProgress />
-                    </HrRoute>
-                ),
-            },
-            {
-                path: "/dashboard/worksheet",
-                element: (
-                    <EmployeeRoute>
-                        <WorkSheet />
-                    </EmployeeRoute>
-                ),
-            },
-            {
-                path: "/dashboard/payment-history",
-                element: (
-                    <EmployeeRoute>
-                        <PaymentHistory />
-                    </EmployeeRoute>
-                ),
-            },
-            
-        ],
+                children: [
+                    {
+                        index: true,
+                        path: "/dashboard",
+                        element: <DashboardHome />,
+                    },
+                    {
+                        path: "/dashboard/employees",
+                        element: (
+                            <AdminRoute>
+                                <AllEmployee />
+                            </AdminRoute>
+                        ),
+                    },
+                    {
+                        path: "/dashboard/payroll",
+                        element: (
+                            <AdminRoute>
+                                <Payroll />
+                            </AdminRoute>
+                        ),
+                    },
+                    {
+                        path: "/dashboard/employee-list",
+                        element: (
+                            <HrRoute>
+                                <EmployeeList />
+                            </HrRoute>
+                        ),
+                    },
+                    {
+                        path: "/dashboard/employee-list/empolyeedetails/:id",
+                        element: (
+                            <HrRoute>
+                                <EmployeeDetails />
+                            </HrRoute>
+                        ),
+                    },
+                    {
+                        path: "/dashboard/work-progress",
+                        element: (
+                            <HrRoute>
+                                <WorkProgress />
+                            </HrRoute>
+                        ),
+                    },
+                    {
+                        path: "/dashboard/worksheet",
+                        element: (
+                            <EmployeeRoute>
+                                <WorkSheet />
+                            </EmployeeRoute>
+                        ),
+                    },
+                    {
+                        path: "/dashboard/payment-history",
+                        element: (
+                            <EmployeeRoute>
+                                <PaymentHistory />
+                            </EmployeeRoute>
+                        ),
+                    },
+
+                ],
+            }
+        ]
     },
     {
         path: "/*",

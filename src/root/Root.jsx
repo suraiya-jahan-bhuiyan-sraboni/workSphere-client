@@ -4,7 +4,7 @@ import Nav from './root components/Nav'
 import Footer from './root components/Footer'
 import { AuthContext } from '../context/AuthContext'
 import { Toaster } from "@/components/ui/sonner"
-
+import { ToastContainer} from 'react-toastify';
 
 const Root = () => {
     const { user, loading, roleLoading } = useContext(AuthContext);
@@ -19,10 +19,11 @@ const Root = () => {
     return (
         <div className='overflow-hidden'> {/**/}
             <Nav/>
-            <div className='min-h-screen w-11/12 mx-auto sm:p-4 '>
+            <div className='min-h-screen'>
                 <Outlet />
             </div>
-            <Toaster />
+            <Toaster position='top-right' richColors  />
+            <ToastContainer />
             <Footer />
         </div>
     )

@@ -12,8 +12,7 @@ import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 import { Navigate } from 'react-router';
 import { uploadToCloudinary } from '../utils/uploadToCloudinary';
-
-
+import { toast } from 'sonner';
 
 const registerSchema = z.object({
     fullName: z.string().min(1, "Full Name is required"),
@@ -28,9 +27,8 @@ const registerSchema = z.object({
 });
 
 const Register = () => {
-    const { createUser, setUser,/*user, loading,*/  updateUser } = use(AuthContext) 
-    const user = false
-    const loading =false
+    const { createUser, setUser, user, loading,setLoading,  updateUser } = use(AuthContext) 
+
     const [imageUrl, setImageUrl] = useState("");
     const [isUploading, setIsUploading] = useState(false);
     const form = useForm({
@@ -84,6 +82,7 @@ const Register = () => {
             .then(async (result) => {
                 const userr = result.user;
                 console.log("firebase User created successfully:", userr);
+                setLoading(true);
                 const user_registrationData = {
                     fullName: data.fullName,
                     emailAddress: userr.email,
@@ -93,6 +92,7 @@ const Register = () => {
                     monthlySalary: data.monthlySalary,
                     designation: data.designation,
                     profilePhoto: data.profilePhoto,
+                    isFired: false,
                     created_at: new Date().toISOString()
                 };
                 const registeredUser = await axios.post(`${import.meta.env.VITE_API_URL}/register`, user_registrationData);
@@ -102,22 +102,21 @@ const Register = () => {
                     auth.currentUser.reload();
                 }).then(() => {
                     console.log(userr)
-                    //toast.success("sucessfully Registered! ")
                     setUser({ ...auth.currentUser });
-
-                    // toast.success("sucessfully Registered! ")
+                    
+                    toast.success("Successfully Registered!");
 
                 }).catch((error) => {
-                    // toast.error(error)
+                    toast.error(error)
                 })
-
+                setLoading(false);
                 // console.log(user)
             }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 // console.log(errorCode,errorMessage)
                 // ..
-                //toast.error(errorMessage)
+                toast.error(errorMessage)
             });
     };
     return (
