@@ -63,7 +63,7 @@ import { toast } from 'sonner';
 
 
 const AllEmployee = () => {
-    const {user}=useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const fetchEmployees = async () => {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/employees`);
         if (!res.ok) throw new Error("Failed to fetch employees");
@@ -76,13 +76,21 @@ const AllEmployee = () => {
     });
     console.log("Employees:", employees);
 
-    const makeHR = async (id) => { 
+    const makeHR = async (id) => {
         const res = await axios.patch(`${import.meta.env.VITE_API_URL}/make-hr/${id}`);
         res.data.success && toast(res.data.message);
         refetch();
     }
-
-
+    const fireEmployee = async (id) => {
+        try {
+            const res = await axios.patch(`${import.meta.env.VITE_API_URL}/user-fire/${id}`);
+            //console.log(res.data);
+            res.data.success && toast(res.data.message);
+            refetch();
+        } catch (err) {
+            console.error("Error firing employee", err);
+        }
+    }
 
     if (isLoading) return <p className="p-4">Loading...</p>;
     if (isError) return <p className="p-4 text-red-500">Error loading data</p>;
@@ -95,9 +103,9 @@ const AllEmployee = () => {
                     <div className="flex gap-2 items-center">
                         <Input placeholder="Search employees..." className="w-64" />
                         <select className="border bg-secondary text-primary px-3 py-1 rounded-md text-sm">
-                            <option>10 per page</option>
-                            <option>20 per page</option>
-                            <option>50 per page</option>
+                            <option value={10}>10 per page</option>
+                            <option value={20}>20 per page</option>
+                            <option value={50}>50 per page</option>
                         </select>
                     </div>
                 </div>
@@ -117,16 +125,16 @@ const AllEmployee = () => {
                             {employees.map((emp, idx) => {
                                 const initials =
                                     emp.fullName
-                                    .split(" ")
-                                    .map((n) => n[0])
-                                    .join("");
+                                        .split(" ")
+                                        .map((n) => n[0])
+                                        .join("");
                                 return (
                                     <TableRow key={idx}>
                                         <TableCell>
                                             <div className="flex items-center gap-4">
-                                                
+
                                                 <Avatar>
-                                                    <AvatarImage src={emp.profilePhoto} className='w-full h-full object-cover'/>
+                                                    <AvatarImage src={emp.profilePhoto} className='w-full h-full object-cover' />
                                                     <AvatarFallback>{initials}</AvatarFallback>
                                                 </Avatar>
                                                 <div>
@@ -136,13 +144,13 @@ const AllEmployee = () => {
                                             </div>
                                         </TableCell>
                                         <TableCell>{emp.emailAddress}</TableCell>
-                                        <TableCell>{emp.monthlySalary ||20000}</TableCell>
+                                        <TableCell>{emp.monthlySalary || 20000}</TableCell>
                                         <TableCell>
                                             {emp.isFired == true ? (
-                                                <Badge variant="destructive">fired</Badge>
+                                                <Badge variant="destructive">{emp.role}</Badge>
                                             ) : (<>
                                                 {
-                                                    emp.role=='hr' ? (
+                                                    emp.role == 'hr' ? (
                                                         <Badge variant="outline">HR</Badge>
                                                     ) : (
                                                         <Button size="sm" onClick={() => makeHR(emp._id)}>Make HR</Button>
@@ -153,10 +161,12 @@ const AllEmployee = () => {
                                             }
                                         </TableCell>
                                         <TableCell>
-                                            {emp.isFired ? (
+                                            {emp.isFired || false ? (
                                                 <Badge variant="destructive">Fired</Badge>
                                             ) : (
-                                                <Button size="icon" variant="destructive">
+                                                <Button size="icon" variant="destructive"
+                                                    onClick={() => fireEmployee(emp._id)}
+                                                >
                                                     ✕
                                                 </Button>
                                             )}
