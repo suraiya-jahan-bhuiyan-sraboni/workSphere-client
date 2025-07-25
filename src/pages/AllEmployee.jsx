@@ -17,6 +17,17 @@ import { AvatarImage } from '@radix-ui/react-avatar';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { toast } from 'sonner';
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
 
 // const employees = [
 //     {
@@ -64,6 +75,7 @@ import { toast } from 'sonner';
 
 const AllEmployee = () => {
     const { user } = useContext(AuthContext);
+    const [salary, setSalary] = useState(0)
     const fetchEmployees = async () => {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/employees`);
         if (!res.ok) throw new Error("Failed to fetch employees");
@@ -100,6 +112,22 @@ const AllEmployee = () => {
         })
 
     }
+    const handleSalary = (id, salaryy) => {
+        //convert salary to number
+        salaryy = parseInt(salaryy);
+        console.log("handle salary", id, "salary:", salaryy);
+        axios.patch(`${import.meta.env.VITE_API_URL}/update-salary/${id}`, { salary: salaryy })
+            .then(res => {
+                console.log("Salary updated:", res.data);
+                toast.success("Salary updated successfully");
+                refetch();
+            })
+            .catch(err => {
+                console.error("Error updating salary", err);
+                toast.error("Failed to update salary", { variant: "destructive" });
+            });
+
+    }
 
     if (isLoading) return <p className="p-4">Loading...</p>;
     if (isError) return <p className="p-4 text-red-500">Error loading data</p>;
@@ -132,6 +160,7 @@ const AllEmployee = () => {
                         </TableHeader>
                         <TableBody>
                             {employees.map((emp, idx) => {
+                                
                                 const initials =
                                     emp.fullName
                                         .split(" ")
@@ -153,7 +182,44 @@ const AllEmployee = () => {
                                             </div>
                                         </TableCell>
                                         <TableCell>{emp.emailAddress}</TableCell>
-                                        <TableCell>{emp.monthlySalary || 20000}</TableCell>
+                                        <TableCell>
+
+                                            <Dialog>
+                                                <form>
+                                                    <DialogTrigger asChild>
+                                                        <p>{emp.monthlySalary || 20000}</p>
+                                                    </DialogTrigger>
+                                                    <DialogContent className="sm:max-w-[425px]">
+                                                        <DialogHeader>
+                                                            <DialogTitle>Edit Salary</DialogTitle>
+                                                            <DialogDescription>
+                                                                Make changes to your employee salary here. Click save when you&apos;re
+                                                                done.
+                                                            </DialogDescription>
+                                                        </DialogHeader>
+                                                        <div className="grid gap-4">
+                                                            <div className="grid gap-3">
+                                                                <Label htmlFor="name-1">Employee Name</Label>
+                                                                <Input id="name-1" name="name" defaultValue={emp.fullName} disabled />
+                                                            </div>
+                                                            <div className="grid gap-3">
+                                                                <Label htmlFor="salary-1">Salary</Label>
+                                                                <Input id="salary-1" name="salary" defaultValue={emp.monthlySalary} onChange={(e) => setSalary(e.target.value)} />
+                                                            </div>
+                                                        </div>
+                                                        <DialogFooter>
+                                                            <DialogClose asChild>
+                                                                <Button variant="outline">Cancel</Button>
+                                                            </DialogClose>
+                                                            <DialogClose asChild>
+                                                                <Button type="submit" onClick={() => handleSalary(emp._id, salary)}>Save changes</Button>
+                                                            </DialogClose>
+                                                        </DialogFooter>
+                                                    </DialogContent>
+                                                </form>
+                                            </Dialog>
+
+                                        </TableCell>
                                         <TableCell>
                                             {emp.isFired == true ? (
                                                 <Badge variant="destructive">{emp.role}</Badge>
