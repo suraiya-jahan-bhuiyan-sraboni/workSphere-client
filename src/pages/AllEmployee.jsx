@@ -29,49 +29,6 @@ import {
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 
-// const employees = [
-//     {
-//         name: "John Smith",
-//         email: "john.smith@company.com",
-//         designation: "Software Engineer",
-//         salary: "$75,000",
-//         isHR: false,
-//         isFired: false,
-//     },
-//     {
-//         name: "Sarah Johnson",
-//         email: "sarah.johnson@company.com",
-//         designation: "Senior Developer",
-//         salary: "$85,000",
-//         isHR: true,
-//         isFired: false,
-//     },
-//     {
-//         name: "Michael Chen",
-//         email: "michael.chen@company.com",
-//         designation: "Junior Developer",
-//         salary: "$65,000",
-//         isHR: false,
-//         isFired: false,
-//     },
-//     {
-//         name: "Emily Davis",
-//         email: "emily.davis@company.com",
-//         designation: "Team Lead",
-//         salary: "$95,000",
-//         isHR: true,
-//         isFired: false,
-//     },
-//     {
-//         name: "David Wilson",
-//         email: "david.wilson@company.com",
-//         designation: "QA Engineer",
-//         salary: "$70,000",
-//         isHR: false,
-//         isFired: true,
-//     },
-// ];
-
 
 const AllEmployee = () => {
     const { user } = useContext(AuthContext);
@@ -86,7 +43,7 @@ const AllEmployee = () => {
         queryFn: fetchEmployees,
         enabled: !!user?.email,
     });
-    console.log("Employees:", employees);
+    //console.log("Employees:", employees);
 
     const makeHR = async (id) => {
         const res = await axios.patch(`${import.meta.env.VITE_API_URL}/make-hr/${id}`);
@@ -113,7 +70,6 @@ const AllEmployee = () => {
 
     }
     const handleSalary = (id, salaryy) => {
-        //convert salary to number
         salaryy = parseInt(salaryy);
         console.log("handle salary", id, "salary:", salaryy);
         axios.patch(`${import.meta.env.VITE_API_URL}/update-salary/${id}`, { salary: salaryy })
@@ -170,7 +126,6 @@ const AllEmployee = () => {
                                     <TableRow key={idx}>
                                         <TableCell>
                                             <div className="flex items-center gap-4">
-
                                                 <Avatar>
                                                     <AvatarImage src={emp.profilePhoto} className='w-full h-full object-cover' />
                                                     <AvatarFallback>{initials}</AvatarFallback>
@@ -183,7 +138,6 @@ const AllEmployee = () => {
                                         </TableCell>
                                         <TableCell>{emp.emailAddress}</TableCell>
                                         <TableCell>
-
                                             <Dialog>
                                                 <form>
                                                     <DialogTrigger asChild>

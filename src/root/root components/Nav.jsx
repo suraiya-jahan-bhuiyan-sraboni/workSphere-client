@@ -21,11 +21,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { MenuIcon } from 'lucide-react';
+import { BadgeCheckIcon, MenuIcon } from 'lucide-react';
 import { DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, } from '../../components/ui/dropdown-menu';
 import { ModeToggle } from '../../components/mode-toggle';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'sonner';
+import { Badge } from "@/components/ui/badge"
 
 const Nav = () => {
   const { user, logout, loading, role } = useContext(AuthContext)
@@ -131,6 +132,40 @@ const Nav = () => {
         <NavigationMenu>
           <NavigationMenuList className="flex gap-4">
             <div className='gap-4 items-center hidden sm:flex'>
+              {user && (<>
+                {role === 'admin' ?
+                  (
+                    <Badge
+                      variant="secondary"
+                      className="bg-blue-500 text-white dark:bg-blue-600"
+                    >
+                      <BadgeCheckIcon />
+                      Admin
+                    </Badge>
+                  )
+                  :
+                  ((role === 'hr') ? (
+                    <Badge
+                      variant="secondary"
+                      className="bg-amber-500 text-white dark:bg-amber-600"
+                    >
+                      <BadgeCheckIcon />
+                      Hr
+                    </Badge>
+                  ) :
+                    (
+                      <Badge
+                        variant="secondary"
+                        className="bg-green-500 text-white dark:bg-green-600"
+                      >
+                        <BadgeCheckIcon />
+                        Employee
+                      </Badge>
+                    )
+                  )
+                }
+              </>)
+              }
               {user && <NavigationMenuItem><NavLink to="/dashboard">Dashboard</NavLink></NavigationMenuItem>}
 
               <NavigationMenuItem><NavLink to="/contact">Contact Us</NavLink></NavigationMenuItem>
