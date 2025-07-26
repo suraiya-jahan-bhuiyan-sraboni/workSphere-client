@@ -88,7 +88,7 @@ const Payroll = () => {
         <div className="p-2 sm:p-4">
             <Card className="p-6 w-full overflow-auto">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-4">
-                    <h2 className="text-xl font-bold">Payroll Management</h2>
+                    <h2 className="text-xl font-bold">Manage Payroll </h2>
                 </div>
                 <Table>
                     <TableHeader>

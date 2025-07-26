@@ -126,9 +126,9 @@ const EmployeeList = () => {
     if (isError) return <p className="p-4 text-red-500">Error loading data</p>;
 
     return (
-        <Card className="max-w-6xl mx-auto mt-10 p-6">
+        <Card className="w-11/12 mx-auto mt-10 p-6">
             <div className="flex justify-between items-center mb-4 flex-wrap gap-4">
-                <h2 className="text-xl font-semibold">Employee Management</h2>
+                <h2 className="text-xl font-semibold">Manage Employees </h2>
                 <div className="flex gap-2 flex-wrap">
                     <Input
                         className="w-64"

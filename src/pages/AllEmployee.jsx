@@ -89,18 +89,10 @@ const AllEmployee = () => {
     if (isError) return <p className="p-4 text-red-500">Error loading data</p>;
 
     return (
-        <div className='w-full overflow-x-auto '>
-            <div className="p-6 bg-base shadow rounded-lg">
+        <div className='w-11/12 mx-auto my-10 '>
+            <div className="p-6 bg-secondary shadow rounded-lg">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-                    <h2 className="text-xl font-semibold">Employee Management</h2>
-                    <div className="flex gap-2 items-center">
-                        <Input placeholder="Search employees..." className="w-64" />
-                        <select className="border bg-secondary text-primary px-3 py-1 rounded-md text-sm">
-                            <option value={10}>10 per page</option>
-                            <option value={20}>20 per page</option>
-                            <option value={50}>50 per page</option>
-                        </select>
-                    </div>
+                    <h2 className="text-xl font-semibold">Manage All Employee </h2>
                 </div>
 
                 <div className='w-full overflow-x-auto'>
@@ -209,19 +201,8 @@ const AllEmployee = () => {
 
                 <div className="flex items-center justify-between mt-4">
                     <p className="text-sm text-muted-foreground">
-                        Showing 1 to 5 of {employees.length} employees
+                        Showing {employees.length} employees
                     </p>
-                    <div className="flex gap-2">
-                        <Button variant="outline" size="sm">
-                            Previous
-                        </Button>
-                        <Button variant="default" size="sm">
-                            1
-                        </Button>
-                        <Button variant="outline" size="sm">
-                            Next
-                        </Button>
-                    </div>
                 </div>
             </div>
         </div>
