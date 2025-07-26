@@ -5,7 +5,6 @@ import {
   NavigationMenuList,
   NavigationMenuItem,
 } from "@/components/ui/navigation-menu";
-
 import { Link, NavLink, useLocation } from 'react-router';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
