@@ -21,9 +21,9 @@ const registerSchema = z.object({
     role: z.string().min(1, "Role is required"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     bankAccountNumber: z.string().min(1, "Bank Account Number is required"),
-    monthlySalary: z.number().min(0, "Salary must be non-negative"),
+    monthlySalary: z.number().min(1, "Salary must be non-negative"),
     designation: z.string().min(1, "Designation is required"),
-    profilePhoto: z.string().min(1, "Profile Photo is required"),
+    profilePhoto: z.string(),
 });
 
 const Register = () => {
@@ -238,7 +238,7 @@ const Register = () => {
                                         <FormItem>
                                             <FormLabel>Monthly Salary *</FormLabel>
                                             <FormControl>
-                                                <Input type="number" placeholder="50,000" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
+                                                <Input type="number" required placeholder="50,000" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
