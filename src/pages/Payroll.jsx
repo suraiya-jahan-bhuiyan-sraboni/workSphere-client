@@ -81,25 +81,15 @@ const Payroll = () => {
         }
     });
 
-    if (isLoading) return <p className="p-4">Loading...</p>;
-    if (isError) return <p className="p-4 text-red-500">Error loading data</p>;
+    if (isLoading) return <p className="p-4 text-center">Loading...</p>;
+    if (isError) return <p className="p-4 text-red-500 text-center">Error loading data</p>;
 
     return (
         <div className="p-2 sm:p-4">
             <Card className="p-6 w-full overflow-auto">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-4">
                     <h2 className="text-xl font-bold">Payroll Management</h2>
-                    <div className="flex items-center gap-2">
-                        <Input
-                            placeholder="Search payment requests..."
-                            className="max-w-sm"
-                        />
-                        <div className="text-sm px-3 py-1 border rounded text-gray-500">
-                            10 per page
-                        </div>
-                    </div>
                 </div>
-
                 <Table>
                     <TableHeader>
                         <TableRow>
@@ -161,15 +151,6 @@ const Payroll = () => {
 
                 <div className="flex justify-between mt-4 text-sm text-gray-500">
                     <span>Showing {payrollData.length} payment request(s)</span>
-                    <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" disabled>
-                            Previous
-                        </Button>
-                        <div className="bg-indigo-600 text-white px-3 py-1 rounded">1</div>
-                        <Button variant="outline" size="sm" disabled>
-                            Next
-                        </Button>
-                    </div>
                 </div>
             </Card>
         </div>

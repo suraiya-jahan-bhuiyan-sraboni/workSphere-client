@@ -82,12 +82,14 @@ const WorkSheet = () => {
             const res = await axios.put(`${import.meta.env.VITE_API_URL}/works/${selectedEntry._id}`, data);
             if (res.status === 200) {
                 console.log("Entry updated:", res.data);
+                toast.success("Work Edited!")
                 resetEdit();
                 setIsEditOpen(false);
                 refetch();
             }
         } catch (error) {
-            console.error("Error updating entry:", error);
+
+            toast.error("Error updating entry:", error);
         }
     };
 
