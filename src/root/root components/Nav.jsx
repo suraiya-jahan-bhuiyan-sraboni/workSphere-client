@@ -131,41 +131,41 @@ const Nav = () => {
         <div className="text-xl font-bold"><Link to="/">WorkSphere</Link></div>
         <NavigationMenu>
           <NavigationMenuList className="flex gap-4">
-            <div className='gap-4 items-center hidden sm:flex'>
-              {user && (<>
-                {role === 'admin' ?
+            {user && (<>
+              {role === 'admin' ?
+                (
+                  <Badge
+                    variant="secondary"
+                    className="bg-blue-500 text-white dark:bg-blue-600"
+                  >
+                    <BadgeCheckIcon />
+                    Admin
+                  </Badge>
+                )
+                :
+                ((role === 'hr') ? (
+                  <Badge
+                    variant="secondary"
+                    className="bg-amber-500 text-white dark:bg-amber-600"
+                  >
+                    <BadgeCheckIcon />
+                    Hr
+                  </Badge>
+                ) :
                   (
                     <Badge
                       variant="secondary"
-                      className="bg-blue-500 text-white dark:bg-blue-600"
+                      className="bg-green-500 text-white dark:bg-green-600"
                     >
                       <BadgeCheckIcon />
-                      Admin
+                      Employee
                     </Badge>
                   )
-                  :
-                  ((role === 'hr') ? (
-                    <Badge
-                      variant="secondary"
-                      className="bg-amber-500 text-white dark:bg-amber-600"
-                    >
-                      <BadgeCheckIcon />
-                      Hr
-                    </Badge>
-                  ) :
-                    (
-                      <Badge
-                        variant="secondary"
-                        className="bg-green-500 text-white dark:bg-green-600"
-                      >
-                        <BadgeCheckIcon />
-                        Employee
-                      </Badge>
-                    )
-                  )
-                }
-              </>)
+                )
               }
+            </>)
+            }
+            <div className='gap-4 items-center hidden sm:flex'>
               {user && <NavigationMenuItem><NavLink to="/dashboard">Dashboard</NavLink></NavigationMenuItem>}
 
               <NavigationMenuItem><NavLink to="/contact">Contact Us</NavLink></NavigationMenuItem>

@@ -11,7 +11,7 @@ import Autoplay from "embla-carousel-autoplay";
 
 const Header = () => {
   return (
-    <div className="flex flex-col md:flex-row gap-4" >
+    <div className="flex flex-col md:flex-row gap-4 pt-10" >
 
       <div className="md:w-1/2 flex flex-col justify-center items-start gap-4 ">
         <h1 className="text-5xl font-bold">Transform Your <br /> <span className="text-stone-500 text-4xl">Workforce Management</span></h1>
