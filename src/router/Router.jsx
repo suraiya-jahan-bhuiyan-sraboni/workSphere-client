@@ -22,6 +22,7 @@ import WorkProgress from "../pages/WorkProgress";
 import WorkSheet from "../pages/WorkSheet";
 import PaymentHistory from "../pages/PaymentHistory";
 import Dashboard from "../pages/Dashboard";
+import StripeProvider from "../stripe/StripeProvider";
 
 const router = createBrowserRouter([
     {
@@ -75,7 +76,7 @@ const router = createBrowserRouter([
                         path: "/dashboard/payroll",
                         element: (
                             <AdminRoute>
-                                <Payroll />
+                                <StripeProvider><Payroll /></StripeProvider>
                             </AdminRoute>
                         ),
                     },

@@ -7,6 +7,15 @@ import {
     TableBody,
     TableCell,
 } from "@/components/ui/table";
+import {
+    Dialog,
+    DialogTrigger,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+    DialogClose,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,6 +24,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { AuthContext } from "../context/AuthContext";
+import PaymentForm from "../stripe/PaymentForm";
 
 const Payroll = () => {
 
@@ -38,28 +48,6 @@ const Payroll = () => {
         enabled: !!user?.email,
     });
 
-    // ✅ Handle payment
-    const handlePay = async (pay_id, employee_id) => {
-        try {
-            const pay = await axios.patch(
-                `${import.meta.env.VITE_API_URL}/payroll/${pay_id}`,
-                {
-                    isPaid: true,
-                    employee_id,
-                }
-            );
-
-            if (pay.status === 200) {
-                toast.success("Payment successful");
-                refetch();
-            } else {
-                toast.error("Payment failed");
-            }
-        } catch (error) {
-            toast.error("Payment error", error);
-        }
-    };
-
     const renderBadge = (status) =>
         status ? (
             <Badge className="bg-green-100 text-green-700 border-green-300">
@@ -70,7 +58,7 @@ const Payroll = () => {
                 🟨 Pending
             </Badge>
         );
-    
+
     const paymentGroupMap = {};
     payrollData.forEach((record) => {
         const key = `${record.employee_id}-${record.month}-${record.year}`;
@@ -134,13 +122,23 @@ const Payroll = () => {
                                         {groupIsPaid ? (
                                             <span className="text-gray-500 text-sm">Pay Now</span>
                                         ) : (
-                                            <Button
-                                                className="bg-indigo-600 hover:bg-indigo-700 text-white"
-                                                onClick={() => handlePay(emp._id, emp.employee_id)}
-                                                disabled={groupIsPaid}
-                                            >
-                                                Pay Now
-                                            </Button>
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <Button className="bg-indigo-600 hover:bg-indigo-700 text-white">
+                                                        Pay Now
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <DialogContent >
+                                                    <DialogHeader>
+                                                        <DialogTitle>Pay Now for {emp.fullName}</DialogTitle>
+                                                        <DialogDescription>Enter your card details to complete payment via Stripe</DialogDescription>
+                                                    </DialogHeader>
+                                                    <PaymentForm employee={emp} recall={refetch} />
+                                                    <DialogClose asChild>
+                                                        <Button variant="outline" className="mt-4">Cancel</Button>
+                                                    </DialogClose>
+                                                </DialogContent>
+                                            </Dialog>
                                         )}
                                     </TableCell>
                                 </TableRow>
