@@ -4,13 +4,13 @@ import Nav from './root components/Nav'
 import Footer from './root components/Footer'
 import { AuthContext } from '../context/AuthContext'
 import { Toaster } from "@/components/ui/sonner"
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const Root = () => {
     const { user, loading, roleLoading } = useContext(AuthContext);
 
     if (loading || (user && (loading || roleLoading))) {
-        console.log("from main layout 2 with user with loading or roleLoading");
+        //console.log("from main layout 2 with user with loading or roleLoading");
         return <div className="min-h-screen flex justify-center items-center flex-col">
             Loading...
             <progress className="progress w-56"></progress>
@@ -18,11 +18,11 @@ const Root = () => {
     }
     return (
         <div className='overflow-hidden'> {/**/}
-            <Nav/>
+            <Nav />
             <div className='min-h-screen'>
                 <Outlet />
             </div>
-            <Toaster position='top-right' richColors  />
+            <Toaster position='top-right' richColors />
             <ToastContainer />
             <Footer />
         </div>

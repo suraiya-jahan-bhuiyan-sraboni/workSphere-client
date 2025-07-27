@@ -11,7 +11,7 @@ import { HandIcon } from 'lucide-react';
 const DashboardHome = () => {
     const { role, roleLoading } = use(AuthContext)
     if (roleLoading) {
-        console.log("from private route")
+        //console.log("from private route")
         return <div className="min-h-screen flex justify-center items-center flex-col">
             Loading...
             <progress className="progress w-56"></progress>
@@ -41,21 +41,21 @@ const DashboardHome = () => {
                 return <HandIcon className="mx-auto text-blue-400 w-20 h-20" />;
         }
     };
-  return (
-      <div className="flex justify-center items-center min-h-screen px-4">
-          <Card className="max-w-xl w-full shadow-lg rounded-xl">
-              <CardHeader className="text-center space-y-4">
-                  {getIcon()}
-                  <CardTitle className="text-2xl font-bold">{getWelcomeMessage()}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                  <p className="text-muted-foreground text-center">
-                     You are Logged in as <span className="font-semibold">{role || 'unknown'}</span>
-                  </p>
-              </CardContent>
-          </Card>
-      </div>
-  )
+    return (
+        <div className="flex justify-center items-center min-h-screen px-4">
+            <Card className="max-w-xl w-full shadow-lg rounded-xl">
+                <CardHeader className="text-center space-y-4">
+                    {getIcon()}
+                    <CardTitle className="text-2xl font-bold">{getWelcomeMessage()}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p className="text-muted-foreground text-center">
+                        You are Logged in as <span className="font-semibold">{role || 'unknown'}</span>
+                    </p>
+                </CardContent>
+            </Card>
+        </div>
+    )
 }
 
 export default DashboardHome

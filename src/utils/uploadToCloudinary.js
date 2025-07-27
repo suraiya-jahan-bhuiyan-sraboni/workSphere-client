@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Meta } from "react-router";
+import { toast } from "sonner";
 
 export const uploadToCloudinary = async (file) => {
     if (!file) throw new Error("No file provided");
@@ -15,7 +16,7 @@ export const uploadToCloudinary = async (file) => {
         );
         return res.data.secure_url;
     } catch (err) {
-        console.error("Cloudinary upload error:", err);
+        toast.error("Cloudinary upload error:", err);
         return null;
     }
 };

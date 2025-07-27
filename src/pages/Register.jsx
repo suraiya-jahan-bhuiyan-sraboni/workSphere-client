@@ -27,7 +27,7 @@ const registerSchema = z.object({
 });
 
 const Register = () => {
-    const { createUser, setUser, user, loading,setLoading,  updateUser } = use(AuthContext) 
+    const { createUser, setUser, user, loading, setLoading, updateUser } = use(AuthContext)
 
     const [imageUrl, setImageUrl] = useState("");
     const [isUploading, setIsUploading] = useState(false);
@@ -62,12 +62,12 @@ const Register = () => {
             if (url) {
                 setImageUrl(url);
                 form.setValue("profilePhoto", url);
-                console.log("Image uploaded successfully!");
+                //console.log("Image uploaded successfully!");
             }
 
         } catch (err) {
-            console.log("Upload failed");
-            console.error(err);
+            //console.log("Upload failed");
+            //console.error(err);
         } finally {
             setIsUploading(false);
         }
@@ -76,12 +76,12 @@ const Register = () => {
     const onSubmit = async (data) => {
 
         data.profilePhoto = imageUrl;
-        console.log("Form data:", data);
+        //console.log("Form data:", data);
 
         createUser(data.emailAddress, data.password)
             .then(async (result) => {
                 const userr = result.user;
-                console.log("firebase User created successfully:", userr);
+                //console.log("firebase User created successfully:", userr);
                 setLoading(true);
                 const user_registrationData = {
                     fullName: data.fullName,
@@ -96,25 +96,25 @@ const Register = () => {
                     created_at: new Date().toISOString()
                 };
                 const registeredUser = await axios.post(`${import.meta.env.VITE_API_URL}/register`, user_registrationData);
-                console.log("User registered on mongodb successfully:", registeredUser);
+                //console.log("User registered on mongodb successfully:", registeredUser);
                 updateUser(data.fullName, data.profilePhoto).then(() => {
                     // Reload user to get updated data
                     auth.currentUser.reload();
                 }).then(() => {
-                    console.log(userr)
+                    //console.log(userr)
                     setUser({ ...auth.currentUser });
-                    
+
                     toast.success("Successfully Registered!");
 
                 }).catch((error) => {
                     toast.error(error)
                 })
                 setLoading(false);
-                // console.log(user)
+                // //console.log(user)
             }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                // console.log(errorCode,errorMessage)
+                // //console.log(errorCode,errorMessage)
                 // ..
                 toast.error(errorMessage)
             });

@@ -27,13 +27,13 @@ const AuthContextProvider = ({ children }) => {
         return signInWithPopup(auth, provider)
     }
 
-   // console.log(user)
+    // //console.log(user)
 
     const logout = () => {
         return signOut(auth);
     }
-    
-   
+
+
 
     useEffect(() => {
         const observer = onAuthStateChanged(auth, (currentUser) => {
@@ -46,10 +46,10 @@ const AuthContextProvider = ({ children }) => {
     }, [])
     const { data: roleData, isPending: roleLoading } = useQuery({
         queryKey: ['role', user?.email],
-        enabled: !!user?.email, 
+        enabled: !!user?.email,
         queryFn: async () => {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/user-role?email=${user.email}`)
-           // console.log("Role data fetched:", res);
+            // //console.log("Role data fetched:", res);
             const data = await res.json()
             return data.role || null
         },
@@ -61,9 +61,9 @@ const AuthContextProvider = ({ children }) => {
         createUser,
         loginUser,
         logout,
-       role: roleData,
+        role: roleData,
         loading: loading,
-       roleLoading,
+        roleLoading,
         setLoading,
         updateUser,
         // resetPassword,

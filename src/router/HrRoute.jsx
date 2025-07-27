@@ -7,7 +7,7 @@ const HrRoute = ({ children }) => {
     if (loading || roleLoading) {
         return <span className="loading loading-spinner loading-xl"></span>
     }
-    console.log(role)
+    //console.log(role)
     if (role !== 'hr') {
         return <Navigate state={{ from: location.pathname }} to="/*"></Navigate>
     }

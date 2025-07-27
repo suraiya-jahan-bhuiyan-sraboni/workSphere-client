@@ -3,14 +3,14 @@ import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
 
-const PaymentForm = ({ employee,recall }) => {
-    console.log(employee)
+const PaymentForm = ({ employee, recall }) => {
+    //console.log(employee)
     const stripe = useStripe();
     const elements = useElements();
     const [processing, setProcessing] = useState(false);
     const { _id, employee_id, employee_name, employee_email, salary } = employee;
 
-    console.log("hello from payment form")
+    //console.log("hello from payment form")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,11 +28,11 @@ const PaymentForm = ({ employee,recall }) => {
         });
 
         if (result.error) {
-            console.log(result.error)
+            //console.log(result.error)
             toast.error(result.error.message);
         } else {
             if (result.paymentIntent.status === 'succeeded') {
-                console.log(result)
+                //console.log(result)
                 const transactionId = result.paymentIntent.id;
                 handlePay(_id, employee_id, transactionId)
             }

@@ -35,7 +35,7 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
   if (loading) {
-    console.log("from login page")
+    //console.log("from login page")
     return <div className="min-h-screen flex justify-center items-center flex-col">
       Loading...
       <progress className="progress w-56"></progress>
@@ -46,30 +46,30 @@ const Login = () => {
   }
 
   const onSubmit = async (data) => {
-    console.log(data);
+    //console.log(data);
     const isUserExists = await axios.get(`${import.meta.env.VITE_API_URL}/users?email=${data.email}`);
     if (isUserExists.data.isFired) {
-      console.error("User is fired, cannot login.");
+      //console.error("User is fired, cannot login.");
       toast.error("You are fired, cannot login")
-    }else{
-    loginUser(data.email, data.password)
-      .then((result) => {
-        const userr = result.user;
-        console.log("firebase User logged in successfully:", userr);
-        setUser(userr);
-        navigate(from);
-        toast.success("Logged in successfully!");
-        navigate(from);
-      })
-      .catch((error) => {
-        console.error("Error logging in:", error);
-        toast.error("Error logging in");
-      });
+    } else {
+      loginUser(data.email, data.password)
+        .then((result) => {
+          const userr = result.user;
+          //console.log("firebase User logged in successfully:", userr);
+          setUser(userr);
+          navigate(from);
+          toast.success("Logged in successfully!");
+          navigate(from);
+        })
+        .catch((error) => {
+          //console.error("Error logging in:", error);
+          toast.error("Error logging in");
+        });
     }
   };
 
   const handleGoogleLogin = () => {
-    console.log("Logging in with Google...");
+    //console.log("Logging in with Google...");
     loginWithGoogle()
       .then(async (result) => {
         const userr = result.user;
@@ -89,10 +89,10 @@ const Login = () => {
         };
 
         const isUserExists = await axios.get(`${import.meta.env.VITE_API_URL}/users?email=${userr.email}`);
-        console.log("User already exists:", isUserExists.data);
+        //console.log("User already exists:", isUserExists.data);
 
         if (isUserExists.data.isFired) {
-          console.log("User is fired, cannot login.");
+          //console.log("User is fired, cannot login.");
           logout();
           toast.error("You are fired, cannot login");
           setLoading(false);
@@ -101,12 +101,12 @@ const Login = () => {
 
           if (isUserExists.data.user === false) {
             const registeredUser = await axios.post(`${import.meta.env.VITE_API_URL}/register`, user_registrationData);
-            console.log("Google User logged in with first time registration successfully:", registeredUser.data);
+            //console.log("Google User logged in with first time registration successfully:", registeredUser.data);
             await queryClient.refetchQueries({ queryKey: ['role', userr.email] });
             setLoading(false);
             toast.success("Registered successfully!");
           } else {
-            console.log("Google User logged in successfully:", userr);
+            //console.log("Google User logged in successfully:", userr);
             setLoading(false);
             toast.success("Logged in successfully!");
           }
@@ -114,7 +114,7 @@ const Login = () => {
 
       })
       .catch((error) => {
-        console.error("Error logging in with Google:", error);
+        //console.error("Error logging in with Google:", error);
       });
 
   };

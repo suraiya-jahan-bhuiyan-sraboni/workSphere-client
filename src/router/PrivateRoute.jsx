@@ -9,7 +9,7 @@ const PrivateRoute = ({ children }) => {
     const location = useLocation()
 
     if (loading) {
-        console.log("from private route")
+        //console.log("from private route")
         return <div className="min-h-screen flex justify-center items-center flex-col">
             Loading...
             <progress className="progress w-56"></progress>
@@ -17,11 +17,11 @@ const PrivateRoute = ({ children }) => {
     }
     if (user && user?.email) {
         return children
-      }
+    }
 
-  return (
-      <Navigate state={location.pathname} to='/login'></Navigate>
-  )
+    return (
+        <Navigate state={location.pathname} to='/login'></Navigate>
+    )
 }
 
 export default PrivateRoute

@@ -17,7 +17,7 @@ const PaymentHistory = () => {
     const fetchPaymentHistory = async () => {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/payment-history?email=${user?.email}`);
         if (res.status !== 200) throw new Error("Failed to fetch payments history");
-        console.log("Fetched payments history:", res.data);
+        //console.log("Fetched payments history:", res.data);
         return res.data;
     };
 

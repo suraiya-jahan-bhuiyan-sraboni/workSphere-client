@@ -70,7 +70,7 @@ const EmployeeList = () => {
         queryFn: fetchEmployees,
         enabled: !!user?.email,
     });
-    console.log("Employees:", employees);
+    //console.log("Employees:", employees);
 
 
     const toggleVerifyStatus = (id) => {
@@ -84,10 +84,10 @@ const EmployeeList = () => {
                         );
                         if (res.data.success) {
                             toast.success(res.data.message);
-                            refetch(); 
+                            refetch();
                         }
                     } catch (err) {
-                        console.error("Error toggling verification", err);
+                        //console.error("Error toggling verification", err);
                         toast.error("Failed to toggle verification status");
                     }
                 },
@@ -96,7 +96,7 @@ const EmployeeList = () => {
     };
     const handlePay = async (emp) => {
         const pay_req_date = new Date().toISOString();
-        // console.log("data:",emp ,"handle pay", emp._id, "month:", month, "year:", year);
+        // //console.log("data:",emp ,"handle pay", emp._id, "month:", month, "year:", year);
         const paymentData = {
             employee_id: emp._id,
             employee_name: emp.fullName,
@@ -107,7 +107,7 @@ const EmployeeList = () => {
             pay_req_date,
             payment_date: "",
         };
-        console.log("Submitting payment request:", paymentData);
+        //console.log("Submitting payment request:", paymentData);
 
         try {
             const res = await axios.post(`${import.meta.env.VITE_API_URL}/payments`, paymentData);
@@ -117,7 +117,7 @@ const EmployeeList = () => {
                 toast.error("Failed to submit payment request");
             }
         } catch (err) {
-            console.error("Payment error:", err);
+            //console.error("Payment error:", err);
             toast.error("An error occurred while submitting payment");
         }
     }
@@ -289,7 +289,7 @@ const EmployeeList = () => {
 
             <div className="mt-4 flex justify-between items-center flex-wrap gap-4">
                 <span className="text-sm text-gray-500">
-                    Showing 
+                    Showing
                     all employee
                 </span>
             </div>

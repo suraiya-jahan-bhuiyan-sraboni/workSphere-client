@@ -25,7 +25,7 @@ const WorkProgress = () => {
     const fetchWorks = async () => {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/work-progress`);
         if (res.status !== 200) throw new Error("Failed to fetch work progress");
-        console.log("Fetched work progress:", res.data);
+        //console.log("Fetched work progress:", res.data);
         return res.data;
     };
 

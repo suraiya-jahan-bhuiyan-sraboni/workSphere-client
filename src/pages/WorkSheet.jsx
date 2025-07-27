@@ -64,15 +64,15 @@ const WorkSheet = () => {
         data.email = user.email;
         const formattedDate = format(new Date(data.date), "MMM dd, yyyy");
         data.date = formattedDate;
-        console.log("Submitted Work Entry:", data);
+        //console.log("Submitted Work Entry:", data);
         const res = await axios.post(`${import.meta.env.VITE_API_URL}/works`, data);
         if (res.data.acknowledged) {
-            console.log("Work entry added successfully");
+            //console.log("Work entry added successfully");
             toast.success("Work entry added successfully");
             refetch();
         }
         reset();
-        console.log("Submitted Work Entry:", res.data);
+        //console.log("Submitted Work Entry:", res.data);
     };
     const onEditSubmit = async (data) => {
         data.email = user.email;
@@ -81,7 +81,7 @@ const WorkSheet = () => {
         try {
             const res = await axios.put(`${import.meta.env.VITE_API_URL}/works/${selectedEntry._id}`, data);
             if (res.status === 200) {
-                console.log("Entry updated:", res.data);
+                //console.log("Entry updated:", res.data);
                 toast.success("Work Edited!")
                 resetEdit();
                 setIsEditOpen(false);
@@ -101,7 +101,7 @@ const WorkSheet = () => {
                 onClick: async () => {
                     const res = await axios.delete(`${import.meta.env.VITE_API_URL}/works/${id}`);
                     if (res.status === 200) {
-                        console.log("Entry deleted:", res.data);
+                        //console.log("Entry deleted:", res.data);
                         toast.error("Entry deleted successfully");
                         refetch()
                     }
@@ -113,7 +113,7 @@ const WorkSheet = () => {
     };
     const fetchWorkEntries = async (email) => {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/works?email=${email}`);
-        console.log("Fetched Work Entries:", res.data);
+        //console.log("Fetched Work Entries:", res.data);
         return res.data;
     };
     const {

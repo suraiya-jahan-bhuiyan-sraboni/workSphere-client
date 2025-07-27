@@ -43,7 +43,7 @@ const AllEmployee = () => {
         queryFn: fetchEmployees,
         enabled: !!user?.email,
     });
-    //console.log("Employees:", employees);
+    ////console.log("Employees:", employees);
 
     const makeHR = async (id) => {
         const res = await axios.patch(`${import.meta.env.VITE_API_URL}/make-hr/${id}`);
@@ -55,14 +55,14 @@ const AllEmployee = () => {
             action: {
                 label: "confirm",
                 onClick: async () => {
-                    console.log("fired employee")
+                    //console.log("fired employee")
                     try {
                         const res = await axios.patch(`${import.meta.env.VITE_API_URL}/user-fire/${id}`);
-                        //console.log(res.data);
+                        ////console.log(res.data);
                         res.data.success && toast.warning(res.data.message);
                         refetch();
                     } catch (err) {
-                        console.error("Error firing employee", err);
+                        //console.error("Error firing employee", err);
                     }
                 },
             },
@@ -71,15 +71,15 @@ const AllEmployee = () => {
     }
     const handleSalary = (id, salaryy) => {
         salaryy = parseInt(salaryy);
-        console.log("handle salary", id, "salary:", salaryy);
+        //console.log("handle salary", id, "salary:", salaryy);
         axios.patch(`${import.meta.env.VITE_API_URL}/update-salary/${id}`, { salary: salaryy })
             .then(res => {
-                console.log("Salary updated:", res.data);
+                //console.log("Salary updated:", res.data);
                 toast.success("Salary updated successfully");
                 refetch();
             })
             .catch(err => {
-                console.error("Error updating salary", err);
+                //console.error("Error updating salary", err);
                 toast.error("Failed to update salary", { variant: "destructive" });
             });
 
@@ -108,7 +108,7 @@ const AllEmployee = () => {
                         </TableHeader>
                         <TableBody>
                             {employees.map((emp, idx) => {
-                                
+
                                 const initials =
                                     emp.fullName
                                         .split(" ")
