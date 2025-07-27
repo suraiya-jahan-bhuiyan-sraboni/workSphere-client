@@ -2,7 +2,7 @@
 
 **WorkSphere** is a modern, role-based employee work tracking and payroll management application built using React and ShadCN UI. HR and Admins can monitor employee task reports, filter work logs by employee or month, and manage approvals and payments — all from a user-friendly dashboard.
 
-**Live Site:** 
+**Live Site:** https://worksphere-a80ec.web.app/
 
 **Admin Username:** suraiya@gmail.com 
 
