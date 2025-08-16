@@ -53,7 +53,7 @@ const Nav = () => {
         <div className='md:hidden'>
           <DropdownMenu>
             <DropdownMenuTrigger asChild><MenuIcon /></DropdownMenuTrigger>
-            <DropdownMenuContent className="sm:hidden">
+            <DropdownMenuContent className="md:hidden">
               <DropdownMenuItem>
                 <NavLink to="/">Home</NavLink>
               </DropdownMenuItem>
@@ -63,7 +63,7 @@ const Nav = () => {
               {user && (<DropdownMenuSub>
                 <div className='flex'><NavLink to="/dashboard"><DropdownMenuItem>Dashboard</DropdownMenuItem></NavLink>{location.pathname.startsWith('/dashboard') && <DropdownMenuSubTrigger></DropdownMenuSubTrigger>}</div>
                 <DropdownMenuPortal>
-                  <DropdownMenuSubContent className={"sm:hidden"}>
+                  <DropdownMenuSubContent className={"md:hidden"}>
                     {
                       location.pathname.startsWith('/dashboard') && (
                         <>
