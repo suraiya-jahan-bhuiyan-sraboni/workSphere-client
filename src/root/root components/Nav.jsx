@@ -47,7 +47,7 @@ const Nav = () => {
 
   }
   return (
-    <div className='w-full shadow-md shadow-secondary'>
+    <div className='w-full shadow-md shadow-secondary bg-background'>
       <header className="w-11/12 mx-auto py-4 sm:px-4 flex justify-between items-center">
         {/* Dropdown Menu for smaller screens */}
         <div className='sm:hidden'>

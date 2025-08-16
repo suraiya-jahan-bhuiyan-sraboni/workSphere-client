@@ -17,9 +17,12 @@ const Root = () => {
         </div>;
     }
     return (
-        <div className='overflow-hidden'> {/**/}
-            <Nav />
-            <div className='min-h-screen'>
+        <div className='overflow-hidden'>
+            <div className='w-full fixed top-0 z-50'>
+                <Nav />
+            </div>
+            
+            <div className='min-h-screen pt-17'>
                 <Outlet />
             </div>
             <Toaster position='top-right' richColors />
