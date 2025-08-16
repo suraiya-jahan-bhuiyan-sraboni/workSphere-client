@@ -23,6 +23,7 @@ import WorkSheet from "../pages/WorkSheet";
 import PaymentHistory from "../pages/PaymentHistory";
 import Dashboard from "../pages/Dashboard";
 import StripeProvider from "../stripe/StripeProvider";
+import About from "../pages/About";
 
 const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
             {
                 path: "/contact",
                 element: <ContactUs />,
+            },
+            {
+                path:"/about",
+                element:<About/>
             },
             {
                 path: "/dashboard",

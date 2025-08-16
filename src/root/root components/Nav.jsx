@@ -167,7 +167,9 @@ const Nav = () => {
             <div className='gap-4 items-center hidden sm:flex'>
               {user && <NavigationMenuItem><NavLink to="/dashboard">Dashboard</NavLink></NavigationMenuItem>}
 
+              <NavigationMenuItem><NavLink to="/">Home</NavLink></NavigationMenuItem>
               <NavigationMenuItem><NavLink to="/contact">Contact Us</NavLink></NavigationMenuItem>
+              <NavigationMenuItem><NavLink to="/about">About Us</NavLink></NavigationMenuItem>
             </div>
 
             <NavigationMenuItem><ModeToggle /></NavigationMenuItem>
