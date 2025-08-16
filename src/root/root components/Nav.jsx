@@ -50,12 +50,15 @@ const Nav = () => {
     <div className='w-full shadow-md shadow-secondary bg-background'>
       <header className="w-11/12 mx-auto py-4 sm:px-4 flex justify-between items-center">
         {/* Dropdown Menu for smaller screens */}
-        <div className='sm:hidden'>
+        <div className='md:hidden'>
           <DropdownMenu>
             <DropdownMenuTrigger asChild><MenuIcon /></DropdownMenuTrigger>
             <DropdownMenuContent className="sm:hidden">
               <DropdownMenuItem>
                 <NavLink to="/">Home</NavLink>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <NavLink to="/about">About</NavLink>
               </DropdownMenuItem>
               {user && (<DropdownMenuSub>
                 <div className='flex'><NavLink to="/dashboard"><DropdownMenuItem>Dashboard</DropdownMenuItem></NavLink>{location.pathname.startsWith('/dashboard') && <DropdownMenuSubTrigger></DropdownMenuSubTrigger>}</div>
@@ -164,12 +167,12 @@ const Nav = () => {
               }
             </>)
             }
-            <div className='gap-4 items-center hidden sm:flex'>
+            <div className='gap-4 items-center hidden md:flex'>
               {user && <NavigationMenuItem><NavLink to="/dashboard">Dashboard</NavLink></NavigationMenuItem>}
 
               <NavigationMenuItem><NavLink to="/">Home</NavLink></NavigationMenuItem>
+              <NavigationMenuItem><NavLink to="/about">About</NavLink></NavigationMenuItem>
               <NavigationMenuItem><NavLink to="/contact">Contact Us</NavLink></NavigationMenuItem>
-              <NavigationMenuItem><NavLink to="/about">About Us</NavLink></NavigationMenuItem>
             </div>
 
             <NavigationMenuItem><ModeToggle /></NavigationMenuItem>
