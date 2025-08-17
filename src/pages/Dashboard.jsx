@@ -15,6 +15,7 @@ const Dashboard = () => {
                         {/* Admin routes */}
                         {role === 'admin' && (
                             <>
+                                <NavLink to="/dashboard/overview" className="flex items-center gap-2 p-2 rounded hover:bg-secondary/80">Overview</NavLink>
                                 <NavLink to="/dashboard/employees" className="flex items-center gap-2 p-2 rounded hover:bg-secondary/80">All Employee List</NavLink>
                                 <NavLink to="/dashboard/payroll" className="flex items-center gap-2 p-2 rounded hover:bg-secondary/80">Payroll</NavLink>
                             </>

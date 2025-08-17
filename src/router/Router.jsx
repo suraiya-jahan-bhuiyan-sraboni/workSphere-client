@@ -24,6 +24,8 @@ import PaymentHistory from "../pages/PaymentHistory";
 import Dashboard from "../pages/Dashboard";
 import StripeProvider from "../stripe/StripeProvider";
 import About from "../pages/About";
+import Overview from "../pages/Overview";
+import Profile from "../pages/Profile";
 
 const router = createBrowserRouter([
     {
@@ -70,10 +72,22 @@ const router = createBrowserRouter([
                         element: <DashboardHome />,
                     },
                     {
+                        path:'/dashboard/profile',
+                        element:<Profile/>
+                    },
+                    {
                         path: "/dashboard/employees",
                         element: (
                             <AdminRoute>
                                 <AllEmployee />
+                            </AdminRoute>
+                        ),
+                    },
+                    {
+                        path: "/dashboard/overview",
+                        element: (
+                            <AdminRoute>
+                                <Overview/>
                             </AdminRoute>
                         ),
                     },

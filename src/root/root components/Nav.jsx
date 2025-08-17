@@ -61,14 +61,17 @@ const Nav = () => {
                 <NavLink to="/about">About</NavLink>
               </DropdownMenuItem>
               {user && (<DropdownMenuSub>
-                <div className='flex'><NavLink to="/dashboard"><DropdownMenuItem>Dashboard</DropdownMenuItem></NavLink>{location.pathname.startsWith('/dashboard') && <DropdownMenuSubTrigger></DropdownMenuSubTrigger>}</div>
+                <div className='flex'><NavLink to="/dashboard"><DropdownMenuItem>Dashboard</DropdownMenuItem></NavLink>{location.pathname.startsWith('/dashboard') && <DropdownMenuSubTrigger className={'sm:hidden'}></DropdownMenuSubTrigger>}</div>
                 <DropdownMenuPortal>
-                  <DropdownMenuSubContent className={"md:hidden"}>
+                  <DropdownMenuSubContent className={"sm:hidden"}>
                     {
                       location.pathname.startsWith('/dashboard') && (
                         <>
                           {role === 'admin' && (
                             <>
+                            <DropdownMenuItem>
+                                <NavLink to="/dashboard/overview">Overview</NavLink>
+                              </DropdownMenuItem>
                               <DropdownMenuItem>
                                 <NavLink to="/dashboard/employees">All Employee List</NavLink>
                               </DropdownMenuItem>
@@ -199,7 +202,7 @@ const Nav = () => {
                   <DropdownMenuContent>
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem> <NavLink to={`/dashboard/profile`}>Profile</NavLink></DropdownMenuItem>
                     <DropdownMenuItem>
                       <Button onClick={handleLogout} variant="destructive">Logout</Button>
                     </DropdownMenuItem>

@@ -44,6 +44,7 @@ const AuthContextProvider = ({ children }) => {
             observer();
         }
     }, [])
+    
     const { data: roleData, isPending: roleLoading } = useQuery({
         queryKey: ['role', user?.email],
         enabled: !!user?.email,
