@@ -129,17 +129,6 @@ const EmployeeList = () => {
         <Card className="w-11/12 mx-auto mt-10 p-6">
             <div className="flex justify-between items-center mb-4 flex-wrap gap-4">
                 <h2 className="text-xl font-semibold">Manage Employees </h2>
-                <div className="flex gap-2 flex-wrap">
-                    <Input
-                        className="w-64"
-                        placeholder="Search employees..."
-                    />
-                    <Button
-                        variant="outline"
-                    >
-                        <Filter className="mr-2 h-4 w-4" /> Verified Only
-                    </Button>
-                </div>
             </div>
 
             <div className="overflow-x-auto">
