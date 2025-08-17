@@ -62,8 +62,8 @@ const Selection = () => {
               <div className="flex justify-center md:justify-end relative">
 
                   <div className="h-full w-full border-30 border-white  bg-blue-600 rounded-xl shadow-lg flex items-center justify-center text-white text-xl font-semibold relative z-10">
-                      <img src="/public/dashboard_dark.png" alt="Dashboad Preview" className='w-11/12 mx-auto my-auto hidden dark:block' />
-                      <img src="/public/dashboard_light.png" alt="Dashboad Preview" className='w-11/12 mx-auto my-auto border-y dark:hidden' />
+                      <img src="/dashboard_dark.png" alt="Dashboad Preview" className='w-11/12 mx-auto my-auto hidden dark:block' />
+                      <img src="/dashboard_light.png" alt="Dashboad Preview" className='w-11/12 mx-auto my-auto border-y dark:hidden' />
 
                   </div>
 
